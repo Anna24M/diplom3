@@ -81,11 +81,11 @@ public abstract class BaseTest {
     @Step("Получить access token пользователя")
     @Description("Получение access token для авторизованных API запросов")
     protected String getAccessToken(String email, String password) {
-        String loginData = String.format("{\"email\": \"%s\", \"password\": \"%s\"}", email, password);
+        User loginUser = new User(email, password, null);
 
         Response response = given()
                 .header(Config.CONTENT_TYPE_HEADER, Config.CONTENT_TYPE_JSON)
-                .body(loginData)
+                .body(gson.toJson(loginUser))
                 .when()
                 .post(Config.LOGIN_ENDPOINT);
 
